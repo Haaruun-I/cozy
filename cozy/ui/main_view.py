@@ -94,6 +94,7 @@ class CozyUI(EventSender, metaclass=Singleton):
         self.create_action("remove_book", self.remove_book)
         self.create_action("mark_book_as_read", self.mark_book_as_read)
         self.create_action("jump_to_book_folder", self.jump_to_book_folder)
+        self.create_action("reset_book", self.reset_book)
         self.create_action("prefs", self.show_preferences_window, ["<primary>comma"])
         self.create_action("quit", self.quit, ["<primary>q", "<primary>w"])
         self.scan_action = self.create_action("scan", self.scan)
@@ -141,6 +142,10 @@ class CozyUI(EventSender, metaclass=Singleton):
     def jump_to_book_folder(self, *_) -> None:
         if self.app.selected_book is not None:
             self.app.selected_book.jump_to_folder()
+
+    def reset_book(self, *_) -> None:
+        if self.app.selected_book is not None:
+            self.app.selected_book.reset()
 
     def get_object(self, name):
         return self.window_builder.get_object(name)

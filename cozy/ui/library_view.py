@@ -95,6 +95,7 @@ class LibraryView:
             book_card = BookCard(book)
             book_card.connect("play-pause-clicked", self._play_book_clicked)
             book_card.connect("open-book-overview", self._open_book_overview_clicked)
+            book_card.connect("refresh-library-page", self._refresh_library_page)
             book_card.connect("remove-book", self._on_remove_book)
             self._book_box.append(book_card)
 
@@ -166,6 +167,9 @@ class LibraryView:
         self._view_model.open_book_detail(book)
 
         return True
+
+    def _refresh_library_page(self, book):
+        self._view_model.library_view_mode = self._view_model.library_view_mode
 
     def _on_remove_book(self, _, book):
         if self._view_model.book_files_exist(book):

@@ -70,6 +70,7 @@ class BookCard(Gtk.FlowBoxChild):
     __gsignals__ = {
         "play-pause-clicked": (GObject.SIGNAL_RUN_LAST, GObject.TYPE_NONE, (object,)),
         "open-book-overview": (GObject.SIGNAL_RUN_LAST, GObject.TYPE_NONE, (object,)),
+        "refresh-library-page": (GObject.SIGNAL_RUN_LAST, GObject.TYPE_NONE, ()),
         "remove-book": (GObject.SIGNAL_RUN_LAST, GObject.TYPE_NONE, (object,)),
     }
 
@@ -131,6 +132,11 @@ class BookCard(Gtk.FlowBoxChild):
         file_launcher = Gtk.FileLauncher(file=Gio.File.new_for_path(track.file))
         dummy_callback = lambda d, r: d.open_containing_folder_finish(r)
         file_launcher.open_containing_folder(None, None, dummy_callback)
+
+    def reset(self) -> None:
+        # self.book.position = 0
+        self.book.last_played = 0
+        self.emit("refresh-library-page")
 
     @Gtk.Template.Callback()
     def _play_pause(self, *_):
