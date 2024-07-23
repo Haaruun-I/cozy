@@ -87,8 +87,12 @@ class ChaptersListBox(Adw.PreferencesGroup):
 class BookDetailView(Adw.NavigationPage):
     __gtype_name__ = "BookDetail"
 
+    button_box: Gtk.Box = Gtk.Template.Child()
+
     play_button: Gtk.Button = Gtk.Template.Child()
     play_icon: Adw.ButtonContent = Gtk.Template.Child()
+
+    reset_button: Gtk.Button = Gtk.Template.Child()
 
     book_label: Gtk.Label = Gtk.Template.Child()
     author_label: Gtk.Label = Gtk.Template.Child()
@@ -148,6 +152,7 @@ class BookDetailView(Adw.NavigationPage):
 
     def _connect_widgets(self):
         self.play_button.connect("clicked", self._play_book_clicked)
+        self.reset_button.connect("clicked", self._reset_book_clicked)
 
     def _on_book_changed(self):
         book = self._view_model.book
@@ -170,6 +175,8 @@ class BookDetailView(Adw.NavigationPage):
 
         self.book_title = book.name
         self.author_label.set_text(book.author)
+
+        self._update_buttons()
 
         self._set_cover_image(book)
         self._on_progress_changed()
@@ -196,6 +203,8 @@ class BookDetailView(Adw.NavigationPage):
                 "book_detail_view",
                 "_current_selected_chapter was NULL. No play/pause chapter icon was changed",
             )
+
+        self._update_buttons()
 
     def _on_book_available_changed(self):
         self.unavailable_banner.set_revealed(not self._view_model.is_book_available)
@@ -345,3 +354,15 @@ class BookDetailView(Adw.NavigationPage):
 
     def _play_book_clicked(self, _):
         self._view_model.play_book()
+
+    def _reset_book_clicked(self, _):
+        self._view_model.reset_book(False)
+        self._update_buttons()
+        print('test')
+
+
+    def _update_buttons(self):
+        if self._view_model._book.last_played == 0:
+            self.reset_button.hide()
+        else:
+            self.reset_button.show()

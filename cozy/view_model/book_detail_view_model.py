@@ -151,6 +151,14 @@ class BookDetailViewModel(Observable, EventSender):
     def play_book(self):
         self._player.play_pause_book(self.book)
 
+    def reset_book(self, refresh_library=True):
+        self._book.last_played = 0
+        if self.playing:
+            self._player.play_pause_book(self.book)
+
+        if refresh_library:
+            self.emit_event(OpenView.LIBRARY)
+
     def play_chapter(self, chapter: Chapter):
         if self._book.current_chapter != chapter:
             chapter.position = chapter.start_position
