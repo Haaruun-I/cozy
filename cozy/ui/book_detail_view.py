@@ -16,6 +16,8 @@ from cozy.ui.chapter_element import ChapterElement
 from cozy.ui.toaster import ToastNotifier
 from cozy.view_model.book_detail_view_model import BookDetailViewModel
 
+from cozy.ui import main_view
+
 log = logging.getLogger(__name__)
 
 ALBUM_ART_SIZE: Final[int] = 256
@@ -119,6 +121,8 @@ class BookDetailView(Adw.NavigationPage):
 
     def __init__(self):
         super().__init__()
+
+        self.main_view = main_view.CozyUI()
 
         self._chapters_event = Event()
         self._chapters_thread: Thread | None = None
@@ -358,6 +362,7 @@ class BookDetailView(Adw.NavigationPage):
     def _reset_book_clicked(self, _):
         self._view_model.reset_book(False)
         self._update_buttons()
+        self.main_view.refresh_library()
         print('test')
 
 

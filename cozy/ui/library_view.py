@@ -95,7 +95,7 @@ class LibraryView:
             book_card = BookCard(book)
             book_card.connect("play-pause-clicked", self._play_book_clicked)
             book_card.connect("open-book-overview", self._open_book_overview_clicked)
-            book_card.connect("refresh-library-page", self._refresh_library_page)
+            book_card.connect("refresh-library-page", self.refresh_library_page)
             book_card.connect("remove-book", self._on_remove_book)
             self._book_box.append(book_card)
 
@@ -106,37 +106,8 @@ class LibraryView:
         self._reader_box.populate(self._view_model.readers)
 
     def _on_library_view_mode_changed(self):
-        visible_child_name = None
-        active_filter_box: Gtk.ListBox = None
-
-        view_mode = self._view_model.library_view_mode
-        main_view_page = MAIN_BOOK_PAGE
-        books_view_page = BOOKS_PAGE
-
-        if len(self._view_model.books) < 1:
-            main_view_page = WELCOME_PAGE
-            visible_child_name = RECENT_PAGE
-        elif view_mode == LibraryViewMode.CURRENT:
-            visible_child_name = RECENT_PAGE
-            if not self._view_model.is_any_book_recent:
-                books_view_page = NO_RECENT_PAGE
-        elif view_mode == LibraryViewMode.AUTHOR:
-            visible_child_name = AUTHOR_PAGE
-            active_filter_box = self._author_box
-        elif view_mode == LibraryViewMode.READER:
-            visible_child_name = READER_PAGE
-            active_filter_box = self._reader_box
-
-        # https://stackoverflow.com/questions/22178524/gtk-named-stack-childs/22182843#22182843
-        self._main_stack.props.visible_child_name = main_view_page
-        self._filter_stack.set_visible_child_name(visible_child_name)
-        self._book_stack.set_visible_child_name(books_view_page)
+        self.refresh_library_page()
         self._navigation_view.pop_to_tag("main")
-
-        if active_filter_box:
-            self._apply_selected_filter(active_filter_box.get_selected_row())
-
-        self._invalidate_filters()
 
     def _invalidate_filters(self):
         self._book_box.invalidate_filter()
@@ -168,8 +139,39 @@ class LibraryView:
 
         return True
 
-    def _refresh_library_page(self, book):
-        self._view_model.library_view_mode = self._view_model.library_view_mode
+    def refresh_library_page(self, book=None):
+
+        visible_child_name = None
+        active_filter_box: Gtk.ListBox = None
+
+        view_mode = self._view_model.library_view_mode
+        main_view_page = MAIN_BOOK_PAGE
+        books_view_page = BOOKS_PAGE
+
+        if len(self._view_model.books) < 1:
+            main_view_page = WELCOME_PAGE
+            visible_child_name = RECENT_PAGE
+        elif view_mode == LibraryViewMode.CURRENT:
+            visible_child_name = RECENT_PAGE
+            if not self._view_model.is_any_book_recent:
+                books_view_page = NO_RECENT_PAGE
+        elif view_mode == LibraryViewMode.AUTHOR:
+            visible_child_name = AUTHOR_PAGE
+            active_filter_box = self._author_box
+        elif view_mode == LibraryViewMode.READER:
+            visible_child_name = READER_PAGE
+            active_filter_box = self._reader_box
+
+        # https://stackoverflow.com/questions/22178524/gtk-named-stack-childs/22182843#22182843
+        self._main_stack.props.visible_child_name = main_view_page
+        self._filter_stack.set_visible_child_name(visible_child_name)
+        self._book_stack.set_visible_child_name(books_view_page)
+
+        if active_filter_box:
+            self._apply_selected_filter(active_filter_box.get_selected_row())
+
+        self._invalidate_filters()
+
 
     def _on_remove_book(self, _, book):
         if self._view_model.book_files_exist(book):

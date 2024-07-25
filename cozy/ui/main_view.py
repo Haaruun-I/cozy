@@ -131,6 +131,9 @@ class CozyUI(EventSender, metaclass=Singleton):
 
         return action
 
+    def refresh_library(self) -> None:
+        self._library_view.refresh_library_page()
+
     def remove_book(self, *_) -> None:
         if self.app.selected_book is not None:
             self.app.selected_book.remove()

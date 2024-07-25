@@ -167,3 +167,4 @@ class BookCard(Gtk.FlowBoxChild):
     def _on_key_press_event(self, controller, keyval, *_):
         if keyval == Gdk.KEY_Return:
             self.emit("open-book-overview", self.book)
+
