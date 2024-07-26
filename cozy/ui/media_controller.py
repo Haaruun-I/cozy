@@ -162,3 +162,11 @@ class MediaController(Adw.BreakpointBin):
 
     def _on_seek_bar_position_changed(self, _, position):
         self._playback_control_view_model.relative_position = position
+
+    def volume_up(self, *_):
+        self._playback_controll_view_model.volume_up()
+        self._on_volume_changed()
+
+    def volume_down(self, *_):
+        self._playback_control_view_model.volume_down()
+        self._on_volume_changed()

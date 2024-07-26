@@ -443,6 +443,7 @@ class Player(EventSender):
 
     def rewind(self):
         state = self._gst_player.state
+        print(state)
         if state != Gst.State.READY:
             self._rewind_in_book()
         if state == Gst.State.PLAYING:
@@ -454,6 +455,12 @@ class Player(EventSender):
             self._forward_in_book()
         if state == Gst.State.PLAYING:
             self._gst_player.play()
+
+    def volume_up(self):
+        self.volume = min(1.0, self.volume + 0.1)
+
+    def volume_down(self):
+        self.volume = max(0, self.volume - 0.1)
 
     def destroy(self):
         self._gst_player.stop()
@@ -582,6 +589,33 @@ class Player(EventSender):
             chapter = self._book.chapters[index_current_chapter + 1]
             chapter.position = chapter.start_position
             self.play_pause_chapter(self._book, chapter)
+
+    def _previous_chapter(self):
+        if not self._book:
+            log.error("Cannot play next chapter because no book reference is stored.")
+            reporter.error(
+                "player", "Cannot play next chapter because no book reference is stored."
+            )
+            return
+
+        index_current_chapter = self._book.chapters.index(self._book.current_chapter)
+
+        self._book.current_chapter.position = self._book.current_chapter.start_position
+        print('index', index_current_chapter)
+        if 0 > index_current_chapter - 1:
+            log.info("Book reached start, cannot rewind further.")
+
+            chapter = self._book.chapters[0]
+            chapter.position = chapter.start_position
+            print(chapter.position, index_current_chapter)
+            self._load_chapter(chapter)
+            self.pause()
+            self._emit_tick()
+        else:
+            chapter = self._book.chapters[index_current_chapter - 1]
+            chapter.position = chapter.start_position
+            self.play_pause_chapter(self._book, chapter)
+
 
     def _on_importer_event(self, event: str, message):
         if event == "scan" and message == ScanStatus.SUCCESS:
