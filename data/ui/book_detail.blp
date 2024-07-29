@@ -52,15 +52,15 @@ template $BookDetail: Adw.NavigationPage {
 
             Adw.Clamp {
               maximum-size: 800;
+              hexpand: true;
 
               Box top_box {
                 orientation: horizontal;
                 spacing: 30;
-                margin-start: 18;
-                margin-end: 18;
                 margin-top: 12;
                 margin-bottom: 18;
                 halign: start;
+                hexpand: true;
 
                 Stack album_art_container {
                   halign: center;
@@ -88,6 +88,7 @@ template $BookDetail: Adw.NavigationPage {
                   margin-bottom: 12;
                   spacing: 6;
                   vexpand: false;
+                  hexpand: true;
 
                   Label book_label {
                     halign: start;
@@ -115,69 +116,13 @@ template $BookDetail: Adw.NavigationPage {
                     ]
                   }
 
-                  Box {
-                    valign: end;
-                    margin-top: 18;
-                    spacing: 6;
+                  Adw.Clamp {
+                    maximum-size: 570;
+                    hexpand: true;
+                    ProgressBar book_progress_ring {
 
-                    $ProgressRing book_progress_ring {
-                      valign: center;
-                    }
-
-                    Grid {
                       hexpand: true;
-                      row-spacing: 3;
-                      column-spacing: 20;
-
-                      Label {
-                        halign: start;
-                        hexpand: true;
-                        label: _("Remaining");
-
-                        styles [
-                          "dim-label",
-                        ]
-
-                        layout {
-                          column: 0;
-                          row: 0;
-                        }
-                      }
-
-                      Label remaining_label {
-                        hexpand: true;
-                        xalign: 0;
-
-                        layout {
-                          column: 1;
-                          row: 0;
-                        }
-                      }
-
-                      Label {
-                        halign: start;
-                        hexpand: true;
-                        label: _("Total");
-
-                        styles [
-                          "dim-label",
-                        ]
-
-                        layout {
-                          column: 0;
-                          row: 1;
-                        }
-                      }
-
-                      Label total_label{
-                        hexpand: true;
-                        xalign: 0;
-
-                        layout {
-                          column: 1;
-                          row: 1;
-                        }
-                      }
+                      valign: end;
                     }
                   }
 
@@ -213,8 +158,6 @@ template $BookDetail: Adw.NavigationPage {
               vexpand: true;
 
               Stack chapters_stack {
-                margin-start: 18;
-                margin-end: 18;
                 margin-top: 12;
                 margin-bottom: 24;
 
