@@ -59,7 +59,7 @@ template $BookDetail: Adw.NavigationPage {
                 spacing: 30;
                 margin-top: 12;
                 margin-bottom: 18;
-                halign: start;
+                halign: fill;
                 hexpand: true;
 
                 Stack album_art_container {
@@ -89,6 +89,7 @@ template $BookDetail: Adw.NavigationPage {
                   spacing: 6;
                   vexpand: false;
                   hexpand: true;
+                  halign: fill;
 
                   Label book_label {
                     halign: start;
@@ -116,15 +117,12 @@ template $BookDetail: Adw.NavigationPage {
                     ]
                   }
 
-                  Adw.Clamp {
-                    maximum-size: 570;
-                    hexpand: true;
                     ProgressBar book_progress_ring {
-
+                      halign: fill;
                       hexpand: true;
                       valign: end;
                     }
-                  }
+
 
                   Button play_button {
                     halign: start;
