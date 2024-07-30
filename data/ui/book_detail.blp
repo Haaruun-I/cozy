@@ -59,7 +59,6 @@ template $BookDetail: Adw.NavigationPage {
                 spacing: 30;
                 margin-top: 12;
                 margin-bottom: 18;
-                halign: fill;
                 hexpand: true;
 
                 Stack album_art_container {
@@ -84,19 +83,16 @@ template $BookDetail: Adw.NavigationPage {
 
                 Box {
                   orientation: vertical;
-                  margin-top: 12;
-                  margin-bottom: 12;
                   spacing: 6;
                   vexpand: false;
                   hexpand: true;
-                  halign: fill;
 
                   Label book_label {
                     halign: start;
                     label: bind template.book_title;
                     ellipsize: end;
                     max-width-chars: 35;
-                    lines: 1;
+                    lines: 2;
 
                     styles [
                       "title-1",
@@ -118,7 +114,6 @@ template $BookDetail: Adw.NavigationPage {
                   }
 
                     ProgressBar book_progress_ring {
-                      halign: fill;
                       hexpand: true;
                       valign: end;
                     }
