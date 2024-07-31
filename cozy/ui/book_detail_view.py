@@ -95,6 +95,9 @@ class BookDetailView(Adw.NavigationPage):
 
     book_progress_ring: Gtk.ProgressBar = Gtk.Template.Child()
 
+    total_label: Gtk.Label = Gtk.Template.Child()
+    remaining_label: Gtk.Label = Gtk.Template.Child()
+
     album_art: Gtk.Picture = Gtk.Template.Child()
     album_art_container: Gtk.Stack = Gtk.Template.Child()
     fallback_icon: Gtk.Image = Gtk.Template.Child()
@@ -212,9 +215,11 @@ class BookDetailView(Adw.NavigationPage):
                 child.set_playing(self._view_model.playing)
                 break
 
-    def _on_length_changed(self): pass
+    def _on_length_changed(self):
+        self.total_label.set_text(self._view_model.total_text)
 
     def _on_progress_changed(self):
+        self.remaining_label.set_text(self._view_model.remaining_text)
         self.book_progress_ring.set_fraction(self._view_model.progress_percent)
         self.book_progress_ring.set_text(self._view_model.remaining_text)
 
@@ -222,6 +227,7 @@ class BookDetailView(Adw.NavigationPage):
         self.available_offline_action.set_enabled(not self._view_model.lock_ui)
 
     def _on_chapters_displayed(self):
+        self.total_label.set_text(self._view_model.total_text)
         self._set_book_download_status()
 
         self._on_current_chapter_changed()
@@ -342,3 +348,5 @@ class BookDetailView(Adw.NavigationPage):
 
     def _play_book_clicked(self, _):
         self._view_model.play_book()
+
+

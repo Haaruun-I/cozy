@@ -118,12 +118,22 @@ template $BookDetail: Adw.NavigationPage {
                       valign: end;
                     }
 
+                  Box {
+                    orientation: horizontal;
+                    Label remaining_label {
+                    }
+
+                    Label total_label {
+                    halign: end;
+                    hexpand:true;
+                    }
+                  }
 
                   Button play_button {
-                    halign: start;
+                    halign: end;
+                    hexpand: true;
                     valign: end;
                     vexpand: true;
-                    margin-top: 12;
                     focusable: true;
                     receives-default: true;
                     tooltip-text: _("Start/Stop playback");
@@ -142,6 +152,7 @@ template $BookDetail: Adw.NavigationPage {
                       icon-name: 'media-playback-start-symbolic';
                     }
                   }
+
                 }
               }
             }

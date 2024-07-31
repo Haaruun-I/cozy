@@ -94,7 +94,7 @@ class BookDetailViewModel(Observable, EventSender):
         if not self._book:
             return None
 
-        remaining = self._book.duration - self._book.progress
+        remaining = self._book.progress
         return time_format.ns_to_human_readable(remaining / self._book.playback_speed)
 
     @property
