@@ -1,17 +1,3 @@
-<p align="center">
-  <img width="200" height="200" src="https://raw.githubusercontent.com/geigi/cozy/master/data/icons/hicolor/scalable/apps/com.github.geigi.cozy.svg">
-</p>
-<p align="center">
-  <a href='https://flathub.org/apps/details/com.github.geigi.cozy'><img width='150' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
-</p>
-
-# It's getting Cozy
-
-![Unit Testing](https://github.com/geigi/cozy/workflows/Unit%20Testing/badge.svg)
-![Flathub Downloads](https://img.shields.io/flathub/downloads/com.github.geigi.cozy?color=e66100&logo=flatpak)
-
-![Screenshot](https://raw.githubusercontent.com/geigi/cozy/img/img/screenshot1.png)
-
 Cozy is a modern audiobook player for Linux.
 Head over to [Matrix](https://matrix.to/#/#cozy:gnome.org) to join the conversation.
 
@@ -66,7 +52,7 @@ Delete the following folders to reset cozy (this will loose all saved progress):
 ```
 
 
-### I can't uninstall the Flatpak:
+### I cant uninstall the Flatpak:
 Try
 ```console
 flatpak uninstall com.github.geigi.cozy/x86_64/stable
